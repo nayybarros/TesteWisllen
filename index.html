@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FiTWiS Sportswear - Shorts Masculinos para Treino</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --bg-dark: #0f0f0f; --bg-darker:#0b0b0b; --text:#1a1a1a; --muted:#666; --brand:#1a1a1a; --radius:16px;
+    }
+    html,body{height:100%}
+    body{ font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif; line-height:1.6; color:#333; background:#fff; scroll-behavior:smooth; }
+
+    /* Header */
+    .header{ position:sticky; top:0; z-index:1000; background:rgba(26,26,26,.95); color:#fff; border-bottom:1px solid rgba(255,255,255,.08); backdrop-filter: blur(10px); }
+    .nav-container{ max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; padding: .9rem 1rem; }
+    .logo{ color:#fff; text-decoration:none; font-weight:800; letter-spacing:-.02em; font-size:1.5rem }
+    .nav-menu{ list-style:none; display:flex; gap:1.25rem }
+    .nav-menu a{ color:#fff; text-decoration:none; font-weight:500 }
+    .nav-menu a:hover{ opacity:.8 }
+    .cart-btn{ background:#666; color:#fff; border:none; padding:.6rem 1rem; border-radius:999px; font-weight:700; cursor:pointer }
+
+    /* Hero */
+    .hero{ background: linear-gradient(135deg,#0f0f0f,#1a1a1a 50%,#0f0f0f); color:#fff; text-align:center; position:relative; overflow:hidden; padding: 96px 0 64px }
+    .hero:before{ content:""; position:absolute; inset:0; opacity:.5; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="g" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M10 0L0 0 0 10" fill="none" stroke="rgba(255,255,255,.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23g)"/></svg>') }
+    .hero-inner{ max-width:1200px; margin:0 auto; padding:0 1rem; position:relative; z-index:1 }
+    .hero h1{ font-size: clamp(2rem, 5vw, 3.5rem); line-height:1.1; font-weight:800; letter-spacing:-.02em; background:linear-gradient(135deg,#fff,#aaa); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+    .hero p{ max-width:720px; margin:.75rem auto 1.5rem; font-size: clamp(1rem, 2.5vw, 1.25rem); opacity:.9 }
+    .cta-btn{ display:inline-block; padding: .9rem 1.75rem; border-radius:999px; color:#fff; background:linear-gradient(135deg,#666,#333); text-decoration:none; font-weight:700 }
+
+    /* Sections */
+    .section{ padding:64px 0 }
+    .container{ max-width:1200px; margin:0 auto; padding:0 1rem }
+    .section-title{ text-align:center; font-size: clamp(1.5rem, 3.5vw, 2.25rem); margin-bottom:2rem; color:var(--text) }
+
+    /* Products */
+    .products{ background:#f8f9fa }
+    .products-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1.25rem }
+    .product-card{ background:#fff; border-radius: var(--radius); overflow:hidden; box-shadow:0 8px 24px rgba(0,0,0,.08); display:flex; flex-direction:column }
+    .product-gallery{ position:relative; height:260px; background:#f3f3f3 }
+    .product-gallery img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; transition:opacity .35s ease, transform .35s ease }
+    .product-gallery img.active{ opacity:1 }
+    .gallery-indicators{ position:absolute; bottom:10px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:2 }
+    .gallery-dot{ width:8px; height:8px; border-radius:50%; background:rgba(255,255,255,.7); cursor:pointer }
+    .gallery-dot.active{ background:#fff; transform:scale(1.15) }
+    .gallery-nav{ position:absolute; top:50%; transform:translateY(-50%); width:36px; height:36px; border-radius:50%; display:grid; place-items:center; background:rgba(0,0,0,.65); color:#fff; border:none; cursor:pointer; opacity:0; transition:opacity .25s }
+    .product-gallery:hover .gallery-nav{ opacity:1 }
+    .gallery-prev{ left:10px } .gallery-next{ right:10px }
+
+    .product-info{ padding:1rem 1rem 1.25rem; display:grid; gap:.6rem }
+    .product-name{ font-weight:700; color:#111; font-size:1.05rem }
+    .product-description{ color:#666; font-size:.95rem }
+    .product-price{ font-size:1.25rem; font-weight:800; color:#444 }
+    .quantity-select{ width:100%; padding:.55rem .65rem; border:2px solid #eee; border-radius:10px; font-size:.95rem }
+    .buy-btn{ margin-top:.5rem; width:100%; padding:.75rem 1rem; border:none; border-radius:12px; background:#111; color:#fff; font-weight:700; cursor:pointer }
+
+    /* Features */
+    .features{ background: linear-gradient(135deg,#ffffff 0%, #f8f9fa 100%) }
+    .features-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.25rem }
+    .feature-card{ background:#fff; border:1px solid rgba(0,0,0,.06); border-radius:20px; padding:2rem 1.25rem; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,.06) }
+    .feature-icon{ font-size:2.25rem; margin-bottom:.75rem; filter:grayscale(.2) }
+
+    /* About */
+    .about{ background:linear-gradient(135deg,#1a1a1a,#0f0f0f); color:#fff; position:relative; overflow:hidden }
+    .about:before{ content:""; position:absolute; inset:0; opacity:.25; background:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="d" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,.25)"/></pattern></defs><rect width="100" height="100" fill="url(%23d)"/></svg>') }
+    .about-inner{ position:relative; z-index:1; max-width:900px; margin:0 auto }
+    .about h2{ font-size: clamp(1.6rem, 4vw, 2.5rem); margin-bottom:1rem }
+    .about p{ opacity:.9; margin:.5rem 0 }
+
+    /* Footer */
+    .footer{ background: linear-gradient(135deg,#0d0d0d, #000); color:#fff }
+    .footer-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-bottom:1rem }
+    .footer-section h3{ margin-bottom:.6rem; color:#cfcfcf; font-size:.95rem; text-transform:uppercase; letter-spacing:.4px }
+    .footer-section p, .footer-section a{ color:#aaa; text-decoration:none; font-size:.95rem }
+    .social-links{ display:flex; gap:.75rem; justify-content:center; margin:1rem 0 }
+    .social-links a{ display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,#333,#555); color:#fff; text-decoration:none }
+
+    /* Empty cart state */
+    .empty-cart{ text-align:center; padding:2rem; color:#666 }
+    .empty-cart-icon{ font-size:2rem; margin-bottom:.5rem }
+
+    /* Cart Modal */
+    .cart-modal{ display:none; position:fixed; inset:0; z-index:2000; background:rgba(0,0,0,.6); backdrop-filter:blur(4px) }
+    .cart-modal-content{ background:#fff; width:min(700px,92vw); max-height:85vh; overflow:hidden; border-radius:24px; margin:4% auto; box-shadow:0 25px 100px rgba(0,0,0,.3) }
+    .cart-modal-header{ background:linear-gradient(135deg,#1a1a1a,#333); color:#fff; padding:1.25rem 1.5rem; position:relative }
+    .cart-modal-header h2{ font-size:1.4rem }
+    .cart-close{ position:absolute; right:1rem; top:50%; transform:translateY(-50%); font-size:1.75rem; cursor:pointer; width:40px; height:40px; display:grid; place-items:center; border-radius:50% }
+    .cart-body{ max-height:50vh; overflow:auto }
+    .cart-item{ display:flex; align-items:center; gap:1rem; padding:1rem 1.25rem; border-bottom:1px solid #f0f0f0 }
+    .cart-item-name{ font-weight:700 }
+    .cart-item-details{ color:#666; font-size:.92rem }
+    .cart-item-price{ margin-left:auto; font-weight:800 }
+    .cart-remove{ background:#dc3545; color:#fff; border:none; border-radius:50%; width:34px; height:34px; cursor:pointer }
+    .cart-total{ background:#f8f9fa; padding:1rem 1.25rem; border-top:2px solid #e9ecef; text-align:right; font-size:1.5rem; font-weight:800 }
+    .cart-actions{ display:flex; gap:.75rem; padding:1rem 1.25rem; background:#fff }
+    .continue-shopping,.checkout-btn{ flex:1; border:none; border-radius:12px; padding:.85rem 1rem; color:#fff; cursor:pointer; font-weight:700 }
+    .continue-shopping{ background:linear-gradient(135deg,#6c757d,#495057) }
+    .checkout-btn{ background:linear-gradient(135deg,#666,#333) }
+
+    /* Responsive */
+    @media (max-width:768px){
+      .nav-menu{ display:none }
+      .products-grid{ grid-template-columns:1fr }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="nav-container">
+      <a href="#home" class="logo">FiTWiS</a>
+      <nav aria-label="Navegação principal">
+        <ul class="nav-menu">
+          <li><a href="#home">Início</a></li>
+          <li><a href="#products">Produtos</a></li>
+          <li><a href="#about">Sobre</a></li>
+          <li><a href="#contact">Contato</a></li>
+        </ul>
+      </nav>
+      <button class="cart-btn" id="cart-btn" aria-haspopup="dialog" aria-controls="cartModal">🛒 Carrinho (0)</button>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="hero-inner">
+      <h1>FiTWiS SPORTSWEAR</h1>
+      <p>Shorts masculinos de alta performance para seus treinos mais intensos.</p>
+      <a href="#products" class="cta-btn">Ver Produtos</a>
+    </div>
+  </section>
+
+  <!-- Products -->
+  <section id="products" class="section products">
+    <div class="container">
+      <h2 class="section-title">Nossos Shorts</h2>
+      <div class="products-grid" id="grid">
+        <!-- Os 8 produtos sem duplicação -->
+        <article class="product-card" data-price="89.90">
+          <div class="product-gallery" data-product="1">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center" alt="Short Verde Militar - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center" alt="Short Verde Militar - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center" alt="Short Verde Militar - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators" aria-hidden="true"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Verde Militar</h3>
+            <p class="product-description">Dry-fit, bolsos laterais e ajuste perfeito para treinos intensos.</p>
+            <div class="product-price">R$ 89,90</div>
+            <label class="sr-only" for="qty1">Quantidade</label>
+            <select id="qty1" class="quantity-select">
+              <option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option>
+            </select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="89.90">
+          <div class="product-gallery" data-product="2">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&sat=-100" alt="Short Preto - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&sat=-100" alt="Short Preto - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&sat=-100" alt="Short Preto - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Preto</h3>
+            <p class="product-description">Clássico, respirável e resistente para academia e outdoor.</p>
+            <div class="product-price">R$ 89,90</div>
+            <select id="qty2" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="89.90">
+          <div class="product-gallery" data-product="3">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&hue=200" alt="Short Azul Royal - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&hue=200" alt="Short Azul Royal - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&hue=200" alt="Short Azul Royal - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Azul Royal</h3>
+            <p class="product-description">Anti-odor e secagem rápida. Ideal para corridas e funcionais.</p>
+            <div class="product-price">R$ 89,90</div>
+            <select id="qty3" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="89.90">
+          <div class="product-gallery" data-product="4">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&hue=320&sat=150" alt="Short Vinho - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&hue=320&sat=150" alt="Short Vinho - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&hue=320&sat=150" alt="Short Vinho - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Vinho</h3>
+            <p class="product-description">Tecido premium, excelente elasticidade e visual sofisticado.</p>
+            <div class="product-price">R$ 89,90</div>
+            <select id="qty4" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="89.90">
+          <div class="product-gallery" data-product="5">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&sat=-50&brightness=120" alt="Short Cinza - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&sat=-50&brightness=120" alt="Short Cinza - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&sat=-50&brightness=120" alt="Short Cinza - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Cinza Mescla</h3>
+            <p class="product-description">Tom neutro e versátil. Confortável para o dia a dia.</p>
+            <div class="product-price">R$ 89,90</div>
+            <select id="qty5" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="94.90">
+          <div class="product-gallery" data-product="6">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&hue=30&sat=200" alt="Short Laranja Neon - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&hue=30&sat=200" alt="Short Laranja Neon - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&hue=30&sat=200" alt="Short Laranja Neon - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Laranja Neon</h3>
+            <p class="product-description">Vibrante para quem quer se destacar, ótimo para treinos noturnos.</p>
+            <div class="product-price">R$ 94,90</div>
+            <select id="qty6" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="94.90">
+          <div class="product-gallery" data-product="7">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&hue=90&sat=180" alt="Short Verde Lima - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&hue=90&sat=180" alt="Short Verde Lima - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&hue=90&sat=180" alt="Short Verde Lima - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Verde Lima</h3>
+            <p class="product-description">Energia e vitalidade em cada treino.</p>
+            <div class="product-price">R$ 94,90</div>
+            <select id="qty7" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+        <article class="product-card" data-price="99.90">
+          <div class="product-gallery" data-product="8">
+            <img src="https://images.unsplash.com/photo-1506629905851-83b10cd1f01e?w=800&h=520&fit=crop&crop=center&hue=270&sat=120" alt="Short Roxo Escuro - Frente" class="active">
+            <img src="https://images.unsplash.com/photo-1594736797933-d0d4e33b8fba?w=800&h=520&fit=crop&crop=center&hue=270&sat=120" alt="Short Roxo Escuro - Costas">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=520&fit=crop&crop=center&hue=270&sat=120" alt="Short Roxo Escuro - Detalhe">
+            <button class="gallery-nav gallery-prev" aria-label="Anterior">‹</button>
+            <button class="gallery-nav gallery-next" aria-label="Próxima">›</button>
+            <div class="gallery-indicators"><span class="gallery-dot active"></span><span class="gallery-dot"></span><span class="gallery-dot"></span></div>
+          </div>
+          <div class="product-info">
+            <h3 class="product-name">Short Training Roxo Escuro</h3>
+            <p class="product-description">Originalidade com toque de sofisticação.</p>
+            <div class="product-price">R$ 99,90</div>
+            <select id="qty8" class="quantity-select"><option value="1">1 unidade</option><option value="2">2 unidades</option><option value="3">3 unidades</option><option value="4">4 unidades</option><option value="5">5 unidades</option></select>
+            <button class="buy-btn">Adicionar ao Carrinho</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="section features">
+    <div class="container">
+      <h2 class="section-title">Por que escolher FiTWiS?</h2>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">💪</div><h3>Alta Performance</h3><p>Tecidos tecnológicos que acompanham seus movimentos com conforto.</p></div>
+        <div class="feature-card"><div class="feature-icon">💨</div><h3>Dry-Fit Technology</h3><p>Secagem rápida para treinos intensos sem desconforto.</p></div>
+        <div class="feature-card"><div class="feature-icon">🎯</div><h3>Ajuste Perfeito</h3><p>Modelagem ergonômica para o corpo em movimento.</p></div>
+        <div class="feature-card"><div class="feature-icon">🚚</div><h3>Entrega Rápida</h3><p>Envio expresso para todo o Brasil.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="section about">
+    <div class="container about-inner">
+      <h2>Sobre a FiTWiS</h2>
+      <p>A FiTWiS Sportswear nasceu da paixão pelo esporte e pela busca por performance. Somos especialistas em shorts masculinos de alta qualidade para treinos.</p>
+      <p>Unimos tecnologia, conforto e estilo para que você alcance o máximo potencial em qualquer atividade física.</p>
+      <p>Cada peça é desenvolvida com materiais premium e processos que garantem durabilidade e desempenho.</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact" class="section footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Contato</h3>
+          <p>📱 WhatsApp: (85) 98196-9523</p>
+          <p>📧 Email: vendas@fitwis.com.br</p>
+          <p>🕐 Atendimento: 9h às 18h</p>
+        </div>
+        <div class="footer-section">
+          <h3>Informações</h3>
+          <p><a href="#">Política de Troca</a></p>
+          <p><a href="#">Frete e Entrega</a></p>
+          <p><a href="#">Tamanhos</a></p>
+          <p><a href="#">FAQ</a></p>
+        </div>
+        <div class="footer-section">
+          <h3>Formas de Pagamento</h3>
+          <p>💳 Cartão de Crédito</p>
+          <p>📱 PIX</p>
+          <p>🏦 Boleto Bancário</p>
+          <p>💰 Em até 12x sem juros</p>
+        </div>
+      </div>
+      <div class="social-links"><a href="#">📘</a><a href="#">📷</a><a href="#">📱</a></div>
+      <p style="text-align:center">&copy; 2025 FiTWiS Sportswear. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="cart-modal" role="dialog" aria-modal="true" aria-label="Carrinho de compras">
+    <div class="cart-modal-content">
+      <div class="cart-modal-header">
+        <h2>Meu Carrinho</h2>
+        <button class="cart-close" aria-label="Fechar">&times;</button>
+      </div>
+      <div class="cart-body"><div id="cartItems"></div></div>
+      <div class="cart-total">Total: R$ <span id="cartTotal">0,00</span></div>
+      <div class="cart-actions">
+        <button class="continue-shopping">Continuar Comprando</button>
+        <button class="checkout-btn">🚀 Finalizar no WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Util: parse currency "R$ 99,90" -> 99.90
+    function parseBRL(str){
+      return Number(str.replace(/[^\d,]/g, '').replace('.', '').replace(',', '.')) || 0;
+    }
+
+    // Smooth scroll (mantém a âncora funcional sem quebrar o foco)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href');
+        if(id.length>1){ e.preventDefault(); document.querySelector(id)?.scrollIntoView({behavior:'smooth', block:'start'}); }
+      })
+    })
+
+    // Galerias robustas (não quebra se qtd de imagens != qtd de dots)
+    function initGalleries(){
+      document.querySelectorAll('.product-gallery').forEach(gallery=>{
+        const imgs=[...gallery.querySelectorAll('img')];
+        const prev=gallery.querySelector('.gallery-prev');
+        const next=gallery.querySelector('.gallery-next');
+        const dots=[...gallery.querySelectorAll('.gallery-dot')];
+        let i=0; const show=idx=>{ imgs.forEach((im,k)=>im.classList.toggle('active',k===idx)); dots.forEach((d,k)=>d.classList.toggle('active',k===idx)); i=idx };
+        const go=dir=> show((i+dir+imgs.length)%imgs.length);
+        prev?.addEventListener('click',e=>{e.preventDefault(); go(-1)});
+        next?.addEventListener('click',e=>{e.preventDefault(); go(+1)});
+        dots.forEach((d,k)=> d.addEventListener('click',()=> show(k)));
+        show(0);
+      })
+    }
+
+    // Carrinho com preços dinâmicos por card (usa data-price se existir, senão lê do texto)
+    const cart = { items: [] };
+    function updateCartBadge(){
+      const count = cart.items.reduce((s,it)=> s+it.q, 0);
+      document.getElementById('cart-btn').textContent = `🛒 Carrinho (${count})`;
+    }
+    function renderCart(){
+      const wrap=document.getElementById('cartItems');
+      const totalEl=document.getElementById('cartTotal');
+      if(cart.items.length===0){ wrap.innerHTML = `<div class="empty-cart"><div class="empty-cart-icon">🛒</div><h3>Seu carrinho está vazio</h3><p>Adicione alguns produtos incríveis!</p></div>`; totalEl.textContent='0,00'; updateCartBadge(); return; }
+      let html=''; let total=0;
+      cart.items.forEach((it,idx)=>{ const sub=it.p*it.q; total+=sub; html+=`
+        <div class="cart-item">
+          <div>
+            <div class="cart-item-name">${it.name}</div>
+            <div class="cart-item-details">Quantidade: ${it.q} | Preço: R$ ${it.p.toFixed(2).replace('.', ',')}</div>
+          </div>
+          <div class="cart-item-price">R$ ${sub.toFixed(2).replace('.', ',')}</div>
+          <button class="cart-remove" title="Remover" onclick="removeFromCart(${idx})">×</button>
+        </div>`
+      })
+      wrap.innerHTML=html; totalEl.textContent = total.toFixed(2).replace('.', ','); updateCartBadge();
+    }
+    function removeFromCart(i){ cart.items.splice(i,1); renderCart(); }
+
+    function initCart(){
+      document.querySelectorAll('.buy-btn').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          const card = btn.closest('.product-card');
+          const name = card.querySelector('.product-name').textContent.trim();
+          const priceAttr = Number(card.dataset.price || 0);
+          const priceText = card.querySelector('.product-price')?.textContent || '';
+          const price = priceAttr || parseBRL(priceText);
+          const qty = Number(card.querySelector('.quantity-select')?.value || 1);
+          const existing = cart.items.find(it=> it.name===name);
+          if(existing){ existing.q += qty; } else { cart.items.push({ name, p: price, q: qty }); }
+          renderCart();
+          btn.textContent = 'Adicionado!'; setTimeout(()=> btn.textContent = 'Adicionar ao Carrinho', 900);
+          if(card.querySelector('.quantity-select')) card.querySelector('.quantity-select').value='1';
+        })
+      })
+
+      const cartBtn=document.getElementById('cart-btn');
+      const modal=document.getElementById('cartModal');
+      const closeBtn=document.querySelector('.cart-close');
+      const contBtn=document.querySelector('.continue-shopping');
+      const checkoutBtn=document.querySelector('.checkout-btn');
+
+      cartBtn.addEventListener('click',()=>{ renderCart(); modal.style.display='block'; })
+      closeBtn.addEventListener('click',()=> modal.style.display='none');
+      contBtn.addEventListener('click',()=> modal.style.display='none');
+      window.addEventListener('click',e=>{ if(e.target===modal) modal.style.display='none' })
+
+      // Checkout via WhatsApp
+      const whatsappNumber='5585981969523';
+      checkoutBtn.addEventListener('click',()=>{
+        if(cart.items.length===0){ alert('Seu carrinho está vazio!'); return; }
+        let msg = 'Olá! Gostaria de fazer um pedido da FiTWiS Sportswear:%0A%0A';
+        let total=0;
+        cart.items.forEach((it,i)=>{ const sub=it.p*it.q; total+=sub; msg += `${i+1}. ${it.name}%0A   Quantidade: ${it.q}%0A   Preço unitário: R$ ${it.p.toFixed(2).replace('.', ',')}%0A   Subtotal: R$ ${sub.toFixed(2).replace('.', ',')}%0A%0A`; })
+        msg += `💰 *TOTAL: R$ ${total.toFixed(2).replace('.', ',')}*%0A%0AAguardo informações sobre frete e pagamento. Obrigado!`;
+        window.open(`https://wa.me/${whatsappNumber}?text=${msg}`,'_blank');
+      })
+
+      updateCartBadge();
+    }
+
+    document.addEventListener('DOMContentLoaded',()=>{ initGalleries(); initCart(); })
+  </script>
+</body>
+</html>
